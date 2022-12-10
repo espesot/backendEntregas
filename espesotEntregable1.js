@@ -1,9 +1,29 @@
 import fs from 'fs'
 
-class ProductManager {
+export class ProductManager {
   constructor(path) {
     this.products = []
     this.path = path
+  }
+
+  async cargaProduct(){
+    try{
+      if(!fs.existsSync(this.path)){
+        await this.addProduct('Producto1','Este es un producto de prueba',200,'Sin Imagen','abc123',25)
+        await this.addProduct('Producto2','Este es un producto de prueba',300,'Sin Imagen','abc124',26)
+        await this.addProduct('Producto3','Este es un producto de prueba',400,'Sin Imagen','abc125',27)
+        await this.addProduct('Producto4','Este es un producto de prueba',500,'Sin Imagen','abc126',27)
+        await this.addProduct('Producto5','Este es un producto de prueba',600,'Sin Imagen','abc127',28)
+        await this.addProduct('Producto6','Este es un producto de prueba',700,'Sin Imagen','abc128',28)
+        await this.addProduct('Producto7','Este es un producto de prueba',800,'Sin Imagen','abc129',29)
+        await this.addProduct('Producto8','Este es un producto de prueba',900,'Sin Imagen','abc1210',95)
+        await this.addProduct('Producto9','Este es un producto de prueba',1000,'Sin Imagen','abc111',55)
+        await this.addProduct('Producto10','Este es un producto de prueba',1100,'Sin Imagen','abc112',85)
+      }
+
+    }catch (error){
+      throw new Error('Error en carga de productos.')
+    }
   }
 
   updateProduct(idProduct, newTitle, newDescripcion, newPrice, newThumbnail, newCode, newStock) {
@@ -94,15 +114,15 @@ class ProductManager {
   }
 }
 
-const productManager = new ProductManager('./product.json')
-//Testing
-console.log(productManager.getPruduct())
-productManager.addProduct('producto prueba','Este es un prodcuto prueba',200,'Sin Imagne','abc123',25)
-console.log(productManager.getPruduct())
-console.log(productManager.getProductByID(2)) //buscamos un preducto que no existe
-console.log(productManager.getProductByID(1)) //buscamos un preducto que existe
-productManager.updateProduct(1,'producto actualizado','este es un producto actulizado',200,'sin imagen','asdd','30')
-productManager.deleteProduct(1)
+// const productManager = new ProductManager('./product.json')
+// //Testing
+// console.log(productManager.getPruduct())
+// productManager.addProduct('producto prueba','Este es un prodcuto prueba',200,'Sin Imagne','abc123',25)
+// console.log(productManager.getPruduct())
+// console.log(productManager.getProductByID(2)) //buscamos un preducto que no existe
+// console.log(productManager.getProductByID(1)) //buscamos un preducto que existe
+// productManager.updateProduct(1,'producto actualizado','este es un producto actulizado',200,'sin imagen','asdd','30')
+// productManager.deleteProduct(1)
 
 
 
