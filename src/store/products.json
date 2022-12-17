@@ -1,0 +1,72 @@
+[
+    {
+        "id":1,
+        "title":"Producto prueba1",
+        "description":"esto es un producto de prueba1",
+        "code":"ASD231",
+        "price":10,
+        "status": true,
+        "stock":10,
+        "category":"A1",
+        "thumbnails":[
+            "aaaaaaaaa",
+            "bbbbbbbbb"
+        ]
+    },
+    {
+        "id":2,
+        "title":"Producto prueba2",
+        "description":"esto es un producto de prueba2",
+        "code":"ASD232",
+        "price":10,
+        "status": true,
+        "stock":10,
+        "category":"A2",
+        "thumbnails":[
+            "lllllllll",
+            "kkkkkkkkk"
+        ]
+    },
+    {
+        "id":3,
+        "title":"Producto prueba3",
+        "description":"esto es un producto de prueba3",
+        "code":"ASD233",
+        "price":10,
+        "status": false,
+        "stock":10,
+        "category":"A1",
+        "thumbnails":[
+            "rrrrrrr",
+            "ttttttt"
+        ]
+    },
+    {
+        "id":4,
+        "title":"Producto prueba4",
+        "description":"esto es un producto de prueba4",
+        "code":"ASD234",
+        "price":10,
+        "status": true,
+        "stock":10,
+        "category":"A2",
+        "thumbnails":[
+            "aaaaahhh",
+            "bbmmmmmm"
+        ]
+    },
+    {
+        "id":5,
+        "title":"Producto prueba5",
+        "description":"esto es un producto de prueba5",
+        "code":"ASD235",
+        "price":100,
+        "status": true,
+        "stock":10,
+        "category":"A1",
+        "thumbnails":[
+            "aaaaaaasda",
+            "bbbbbbasdasdb"
+        ]
+    }
+]
