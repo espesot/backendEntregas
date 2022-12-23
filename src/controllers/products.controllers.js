@@ -1,6 +1,5 @@
-import { ProductManager } from '../services/products.services.js'
+import productManager from '../services/products.services.js'
 
-const productManager = new ProductManager('./src/store/prodcuts.json')
 
 export const getPrducts = async (req, res) => {
   try {
@@ -36,7 +35,7 @@ export const getProductbyId = async (req,res)=>{
   try {
     let{pid}= req.params
     if(!isNaN(pid)){
-      const foundedProduct =await productManager.getProductbyId(Number(pid))
+      const foundedProduct = await productManager.getProductbyId(Number(pid))
       res.status(200).json({
         success:true,
         product: foundedProduct
@@ -55,10 +54,13 @@ export const getProductbyId = async (req,res)=>{
   }
 }
 
-export const postProduct = async (req,res)=>{
+export const postProduct = async (req,res) => {
   try {
     const product = req.body
     await productManager.addProducts(product)
+
+    const productsList = await productManager.getPrducts()
+    req.io.emit('products',productsList)
 
     res.status(201).json({
       success:true,
@@ -80,6 +82,9 @@ export const updateProduct = async(req,res)=>{
     const updatedProduct = req.body
     await productManager.updateProduct(Number(pid), updatedProduct)
 
+    const productsList = await productManager.getPrducts()
+    req.io.emit('products', productsList)
+
     res.status(200).json({
       success:true,
       message:'producto modificado',
@@ -96,6 +101,10 @@ export const updateProduct = async(req,res)=>{
 export const deleteProductById = async(req,res)=>{
   try {
     await productManager.deleteProduct(Number(req.params.pid))
+
+    const productsList = await productManager.getPrducts()
+    req.io.emit('products', productsList)
+    
     res.status(200).json({
       success:true,
       message:'Producto Eliminado'

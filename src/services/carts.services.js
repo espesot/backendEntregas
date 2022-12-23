@@ -26,7 +26,7 @@ export class CartManager {
       this.#readCarts()
       const cart = await this.getCartById(cartId)
       const cartIndex = this.carts.findIndex((cart) => cart.id === cartId)
-      const productindex = cart.products.findIndex((el)=> el.products === productId)
+      const productindex = cart.products.findIndex((el)=> el.product === productId)
       if(productindex!== -1){
         this.carts[cartIndex].products[productindex].quantity++
       }else{
@@ -54,9 +54,9 @@ export class CartManager {
   async getCartById(cartId) {
     try {
       await this.#readCarts()
-      const foundCart = this.carts.find((cart) => cart.id === cartId)
-      if (foundCart) {
-        return foundCart
+      const foundedCart = this.carts.find((cart) => cart.id === cartId)
+      if (foundedCart) {
+        return foundedCart
       } else {
         throw new Error('Cart no encontrado')
       }
@@ -88,3 +88,5 @@ export class CartManager {
 
 
 }
+const cartManager =  new CartManager('./src/store/carts.json')
+export default cartManager

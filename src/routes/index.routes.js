@@ -1,11 +1,14 @@
 import { Router } from 'express'
 
-import productRouter from './products.routes'
-import cartRouter from './carts.routes'
+import productRouter from './products.routes.js'
+import cartRouter from './carts.routes.js'
+import viewsRouter from './views.routes.js'
 
 const router = Router()
 
-router.use('/api/product', productRouter)
+router.use('/',viewsRouter)
+
+router.use('/api/products', productRouter)
 
 router.use('/api/carts',cartRouter)
 

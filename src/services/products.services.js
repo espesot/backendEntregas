@@ -126,7 +126,6 @@ export class ProductManager {
       } else{
         this.products = []
       }
-
     }catch(error){
       throw new Error('Error al leer los productos!!!')
     }
@@ -139,5 +138,7 @@ export class ProductManager {
     })
     return maxId
   }
-
 }
+
+const productManager = new ProductManager('./src/store/products.json')
+export default productManager
