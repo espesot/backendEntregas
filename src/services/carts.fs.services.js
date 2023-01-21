@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-export class CartManager {
+class CartManagerFs {
   constructor(path) {
     this.carts = []
     this.path = path
@@ -88,5 +88,5 @@ export class CartManager {
 
 
 }
-const cartManager =  new CartManager('./src/store/carts.json')
-export default cartManager
+const cartManagerFs =  new CartManagerFs('./src/store/carts.json')
+export default cartManagerFs

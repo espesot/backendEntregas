@@ -3,12 +3,14 @@ import { Server } from 'socket.io'
 import routes from './routes/index.routes.js'
 import {engine} from 'express-handlebars'
 import { webSocketInit } from './utils/websocket.js'
+import dotenv from 'dotenv'
+import dbConnect from './configs/db.config.js'
 
-
+dotenv.config()   // agregado archivo para tomar variables de congig 
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('src/public'))
+app.use(express.static('public/'))
 
 
 app.engine('handlebars', engine())
@@ -20,9 +22,12 @@ app.use((req,res,next)=>{
   next() 
 })
 
+//conexion MongoDB
+dbConnect()
+
 app.use(routes)
 
-const PORT = 8080
+const PORT = process.env.PORT || 8080
 const server = app.listen(PORT, () => console.log(`🚀 Server started on port http://localhost:${PORT}`))
 server.on('error', (err) => console.log(err))
 

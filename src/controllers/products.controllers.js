@@ -1,11 +1,11 @@
-import productManager from '../services/products.services.js'
+//import productManagerFs from '../services/products.fs.services.js'
+import productManagerDB from '../services/products.mongo.services.js'
 
-
-export const getPrducts = async (req, res) => {
+export const getProducts = async (req, res) => {
   try {
     const {limit} = req.query
-    const products = await productManager.getProducts()
-
+    //const products = await productManager.getProducts()
+    const products = await productManagerDB.getProducts()
     if(!isNaN(limit)){
       res.status(200).json({
         sussess:true,
@@ -35,7 +35,8 @@ export const getProductbyId = async (req,res)=>{
   try {
     let{pid}= req.params
     if(!isNaN(pid)){
-      const foundedProduct = await productManager.getProductbyId(Number(pid))
+      //const foundedProduct = await productManager.getProductbyId(Number(pid))
+      const foundedProduct = await productManagerDB.getProductbyId(pid)
       res.status(200).json({
         success:true,
         product: foundedProduct
@@ -57,15 +58,16 @@ export const getProductbyId = async (req,res)=>{
 export const postProduct = async (req,res) => {
   try {
     const product = req.body
-    await productManager.addProducts(product)
-
-    const productsList = await productManager.getPrducts()
+    //await productManagerFs.addProducts(product)
+    const savedProduct = await productManagerDB.createProduct(product)
+    const productsList = await productManagerDB.getProducts()
+    //const productsList = await productManagerFs.getPrducts()
     req.io.emit('products',productsList)
 
     res.status(201).json({
       success:true,
       message:'Producto Creado',
-      product:product
+      product:savedProduct
     })
   } catch (error) {
     res.status(500).json({
@@ -79,10 +81,13 @@ export const postProduct = async (req,res) => {
 export const updateProduct = async(req,res)=>{
   try {
     const pid = req.params.pid
-    const updatedProduct = req.body
-    await productManager.updateProduct(Number(pid), updatedProduct)
+    const data = req.body
 
-    const productsList = await productManager.getPrducts()
+    const updatedProduct = await productManagerDB.updateProdcut(pid,data)
+
+
+
+    const productsList = await productManagerDB.getProducts()
     req.io.emit('products', productsList)
 
     res.status(200).json({
@@ -100,9 +105,12 @@ export const updateProduct = async(req,res)=>{
 
 export const deleteProductById = async(req,res)=>{
   try {
-    await productManager.deleteProduct(Number(req.params.pid))
+    const {pid} = req.params
+    //await productManager.deleteProduct(Number(req.params.pid))
+    await productManagerDB.deleteProduct(pid)
 
-    const productsList = await productManager.getPrducts()
+    //const productsList = await productManagerFs.getPrducts()
+    const productsList = await productManagerDB.getProducts()
     req.io.emit('products', productsList)
     
     res.status(200).json({
