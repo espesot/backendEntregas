@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
 import MongooseDelete from 'mongoose-delete'
+import mongoosPaginate from 'mongoose-paginate-v2'
+
+
 
 const productSchema = new mongoose.Schema({
   title:{
@@ -37,5 +40,6 @@ const productSchema = new mongoose.Schema({
 }, {timestamps:true})
 
 productSchema.plugin(MongooseDelete,{deletedAt:true})
-const productModel = mongoose.model('Product', productSchema)
+productSchema.plugin(mongoosPaginate)
+const productModel = mongoose.model('Products', productSchema)
 export default productModel

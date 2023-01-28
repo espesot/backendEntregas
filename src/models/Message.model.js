@@ -13,6 +13,6 @@ const messageSchema = new mongoose.Schema({
 },{timestamps:true})
 
 messageSchema.plugin(MongooseDelete,{deletedAt:true})
-const messageModel = mongoose.model('Message',messageSchema)
+const messageModel = mongoose.model('Messages',messageSchema)
 
 export default messageModel

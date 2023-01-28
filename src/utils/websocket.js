@@ -8,7 +8,7 @@ export const webSocketInit = (io) => {
       if(err){
         console.log(err)
       }else{
-        socket.emit('welcome', result)
+        socket.emit('wellcome', result)
       }
     })
 

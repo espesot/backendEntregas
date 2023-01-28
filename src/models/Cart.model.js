@@ -9,18 +9,20 @@ const cartItemSchema = new Schema({
   },
   quantity: {
     type: Number,
-    required: true
+    required: true,
   }
 }
-, {_id: false })
+, { _id: false })
+
 const cartSchema = new Schema({
-  item:[{
-    type: cartItemSchema,
-    default:[]
-  }]
-},{timestamps:true})
+  items: [
+    {
+      type: cartItemSchema,
+      default: []
+    }]
+}, { timestamps: true })
 
 cartSchema.plugin(MongooseDelete, { deletedAt: true })
 
-const cartModel = mongoose.model('Cart', cartSchema)
+const cartModel = mongoose.model('Carts', cartSchema)
 export default cartModel
