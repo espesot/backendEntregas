@@ -45,6 +45,31 @@ export const addProductToCart = async(req,res)=>{
   }
 }
 
+export const addProductsToCart = async(req,res)=>{
+  try {
+    let {cid} = req.params
+    let {items} = req.body
+    if(items && cid){
+      const updatedCart = await cartsManagerDB.addProductsToCart(cid,items)
+      res.status(201).json({
+        success: STATUS.SUCCESS,
+        message: 'producto agregado al Cart',
+        updatedCart:updatedCart
+      })
+    }else{
+      res.status(401).json({
+        success:STATUS.FAIL,
+        message: 'error al requiere params'
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: STATUS.FAIL,
+      message: error.message
+    })
+  }
+}
+
 export const deleteProductToCart = async(req,res)=>{
   try {
     let{cid,pid}= req.params

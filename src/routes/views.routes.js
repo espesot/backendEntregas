@@ -12,4 +12,6 @@ router.get('/chat', views.getChat)
 
 router.get('/realtimeproducts', views.getRealTimeProducts)
 
+router.get('/cart/:cid', views.getCart)
+
 export default router

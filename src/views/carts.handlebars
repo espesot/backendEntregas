@@ -1,0 +1,8 @@
+<h1>Cart: {{_id}}</h1>
+<h2>Lista de Productos del Carro</h2>
+<ul>
+  {{#each items as |item| }}
+    <li>product: {{item.product}}</li>
+    <li>quantity: {{item.quantity}}</li>
+  {{/each}}
+</ul>
