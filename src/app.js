@@ -7,11 +7,32 @@ import { webSocketInit } from './utils/websocket.js'
 import routes from './routes/index.routes.js'
 import dbConnect from './configs/db.config.js'
 
+//Nuevo
+import cookie from 'cookie-parser'
+import session from 'express-session'
+import mongoStore from 'connect-mongo'
+
+
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public/'))
+//Nuevo
+app.use(cookie())
+app.use(session({
+  store: new mongoStore({
+    mongoUrl: process.env.URL_DB,
+    options:{
+      userNewUrlparser: true,
+      useUnifiedTopology: true,
+    }
+  }),
+  secret: process.env.COOKIE_SECRET,
+  resave:false,
+  saveUninitialized:false,
+  cookie:{maxAge:100000}
+}))
 
+app.use(express.static('public/'))
 
 app.engine('handlebars', engine())
 app.set('view engine','handlebars')
