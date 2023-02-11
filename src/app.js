@@ -12,6 +12,7 @@ import cookie from 'cookie-parser'
 import session from 'express-session'
 import mongoStore from 'connect-mongo'
 
+import passport from './utils/passport.utils.js'
 
 const app = express()
 app.use(express.json())
@@ -46,13 +47,17 @@ app.use((req,res,next)=>{
 //conexion MongoDB
 dbConnect()
 
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(routes)
 
 const PORT = process.env.PORT || 3000
-const server = app.listen(PORT, () => console.log(`🚀 Server started on port http://localhost:${PORT}`))
-server.on('error', (err) => console.log(err))
+const server = app.listen(PORT, () => {
+  console.log(`🚀 Server started on port http://localhost:${PORT}`)
+})
 
-server.on('error',(err)=> console.log(err))
+server.on('error', (err) => console.log(err))
 
 const io = new Server(server)
 webSocketInit(io)

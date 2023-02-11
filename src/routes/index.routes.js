@@ -6,6 +6,9 @@ import viewsRouter from './views.routes.js'
 import usersRoutes from './users.routes.js'
 import authRoutes from './auth.routes.js'
 
+import passportLocalRoutes from './passportLocal.routes.js'
+import githubRoutes from './github.routes.js'
+
 const router = Router()
 
 router.use('/',viewsRouter)
@@ -18,4 +21,7 @@ router.use('api/auth' ,authRoutes)
 
 router.use('api/users', usersRoutes)
 
+router.use('/api/passportLocal', passportLocalRoutes)
+
+router.use('/api/github', githubRoutes)
 export default router

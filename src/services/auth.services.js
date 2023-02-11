@@ -1,4 +1,7 @@
+import bcrypt from 'bcrypt'
 import * as userServices from './users.services.js'
+
+
 
 export const login = async (email, password) => {
   try {
@@ -6,7 +9,9 @@ export const login = async (email, password) => {
     if(!user){
       throw new Error('Usuario no existe')
     }
-    if(password === user.password){
+    const isValid = bcrypt.compareSync(password, user.password)
+    
+    if(isValid){
       return true
     }else{
       return false

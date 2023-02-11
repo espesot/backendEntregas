@@ -30,3 +30,39 @@ export const getUser = async (req,res)=>{
     })
   }
 }
+
+export const updateUser = async(req,res)=>{
+  try {
+    const {email} = req.params
+    const {body} = req
+    const updatedUser = await usersService.updateUser(email,body,false)
+    delete updatedUser.password
+
+    res.status(200).json({
+      success: true,
+      updatedUser: updatedUser
+    })
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message: error.message
+    })
+  }
+}
+
+export const updatePassword = async(req,res)=>{
+  try {
+    const {email} = req.params
+    const {body} = req
+    const updatedUser = await usersService.updateUser(email,body, false)
+    res.status(200).json({
+      success:true,
+      updatedUser:updatedUser
+    })
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:error.message
+    })
+  }
+}

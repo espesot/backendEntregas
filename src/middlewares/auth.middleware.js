@@ -10,7 +10,7 @@ export const authMiddleware = (req, res, next) => {
     }
 
   } catch (error) {
-    res.status(500).json({
+    res.status(403).json({
       success: STATUS.FAIL,
       message: error.message
     })
