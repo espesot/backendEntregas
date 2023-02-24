@@ -10,7 +10,10 @@ export const login = async (req, res) => {
     if (logged) {
       req.session.logged = true
       req.session.user = await usersServices.getUser(email)
-      res.redirect('/')
+      res.status(200).json({
+        success: STATUS.SUCCESS,
+        message: 'ususario Loggeado OK'
+      })
     } else {
       res.status(401).json({
         success: STATUS.FAIL,

@@ -17,9 +17,19 @@ const userSchema = new Schema({
     require:true,
     unique:true
   },
+  age:{
+    type: Number,
+    required: true,
+    min: [1,'edad mayor a uno']
+  },
   password:{
     type: String,
     require:true
+  },
+  cartId:{
+    type: Schema.Types.ObjectId,
+    ref: 'Carts',
+    required: true
   },
   role:{
     type: String,

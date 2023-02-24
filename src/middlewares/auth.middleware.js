@@ -16,3 +16,19 @@ export const authMiddleware = (req, res, next) => {
     })
   }
 }
+
+export const checkSession = (req, res, next)=>{
+  try {
+    if(req.session.logged){
+      req.session.touch()
+      next()
+    }else{
+      throw new Error('usuario no logueado')
+    }
+  } catch (error) {
+    res.status(403).json({
+      success: STATUS.FAIL,
+      message: error.message
+    })
+  }
+}

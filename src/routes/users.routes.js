@@ -6,6 +6,8 @@ const router = Router()
 router.post('/', usersControllers.createUser)
 router.get('/', usersControllers.getUser)
 
+router.post('/ui', usersControllers.createUser)
+
 router.put('/updateUser/:email', usersControllers.updateUser)
 router.put('/updatePassword/:email', usersControllers.updatePassword)
 export default router

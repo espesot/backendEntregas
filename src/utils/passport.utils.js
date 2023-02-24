@@ -14,7 +14,7 @@ passport.serializeUser(function (user, done) {
   done(null, user._id)
 })
 
-passport.serializeUser((_id, done)=>{
+passport.deserializeUser((_id, done)=>{
   console.log('Deserealizando')
   User.findById(_id, (err,user)=>{
     done(err,user)

@@ -1,5 +1,6 @@
 import { User } from '../models/User.model.js'
 import bcrypt from 'bcrypt'
+import cartServices from '../services/carts.mongo.services.js'
 
 export const createUser = async (data) => {
   try {
@@ -7,8 +8,11 @@ export const createUser = async (data) => {
     if (foundedUser) {
       throw new Error('El usuario ya esta Registrado')
     } else {
-      data.password = bcrypt.hashSync(data.password, bcrypt.genSaltSync(10))
-      const createdUser = await User.create(data)
+      const createdCart = await cartServices.createCard()
+      const newUser = {...data, cartId: createdCart._id}
+      
+      newUser.password = bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(10))
+      const createdUser = await User.create(newUser)
       return createdUser
     }
   } catch (error) {
@@ -25,7 +29,7 @@ export const getUser = async (email) => {
   }
 }
 
-export const updateUser = async (email, data, updatePassword = false) => {
+export const updateUser = async (email, data, updatePassword=false) => {
   try {
     const user = await getUser(email)
     if (user) {

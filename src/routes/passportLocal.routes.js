@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import passport from '../utils/passport.utils.js'
+import { STATUS } from '../constants/constants.js'
 
 const router = Router()
 
@@ -16,7 +17,11 @@ router.get('/fail', (req, res) => {
 router.post('/singup', passport.authenticate('singup',{
   failureRedirect:'/api/passportLocal/fail'
 }), (req,res)=>{
-  res.redirect('/')
+  res.status(200).json({
+    success: STATUS.SUCCESS,
+    message: 'usuario creado ok',
+    createdUser: req.user
+  })
 })
 
 
@@ -25,7 +30,11 @@ router.post('/login', passport.authenticate('login',{
 }), (req,res)=>{
   req.session.logged = true
   req.session.user = req.user
-  res.redirect('/')
+  res.status(200).json({
+    success: STATUS.SUCCESS,
+    message: 'ususario logueado OK',
+    loggedUser: req.session.user
+  })
 })
 
 export default router
