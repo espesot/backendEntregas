@@ -1,13 +1,12 @@
 import mongoose from 'mongoose'
-import dotenv from 'dotenv'
+import configs from './app.configs.js'
 
-dotenv.config()
 
 const dbConnect = async () =>{
   try {
-    console.log('Conecting to DB')
+    console.log('[Conecting to DB ⚡️')
     mongoose.set('strictQuery', false)
-    await mongoose.connect(process.env.URL_DB || '')    
+    await mongoose.connect(configs.mongoUri || '')    
     console.log('DB Connected')
   } catch (error) {
     console.log(error)
