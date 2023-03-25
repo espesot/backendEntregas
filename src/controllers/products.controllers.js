@@ -1,5 +1,6 @@
 import { STATUS } from '../constants/constants.js'
 import factory from '../services/factory.js'
+import { getProductsMocks } from '../mocks/products.mock.js'
 
 export const getProducts = async (req, res) => {
   try {
@@ -104,6 +105,22 @@ export const deleteProductById = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Producto Eliminado'
+    })
+  } catch (error) {
+    res.status(500).json({
+      status: STATUS.FAIL,
+      message: error.message
+    })
+  }
+}
+
+export const mockProduct = async(req,res) =>{
+  try {
+    const product = getProductsMocks(100)
+
+    res.status(200).json({
+      success:STATUS.SUCCESS,
+      product
     })
   } catch (error) {
     res.status(500).json({
