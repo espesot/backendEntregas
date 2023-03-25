@@ -17,18 +17,68 @@ export const authMiddleware = (req, res, next) => {
   }
 }
 
-export const checkSession = (req, res, next)=>{
+export const isLogged = (req, res, next)=>{
   try {
     if(req.session.logged){
-      req.session.touch()
+      res.session.touch()
       next()
     }else{
-      throw new Error('usuario no logueado')
+      throw new Error('Usuario no logueado')
     }
   } catch (error) {
     res.status(403).json({
-      success: STATUS.FAIL,
-      message: error.message
+      success:STATUS.FAIL,
+      message:error.message
     })
   }
 }
+
+export const isUser =(req,res,next) =>{
+  try {
+    if(req.session.user.role ==='user'){
+      req.session.touch()
+      next()
+    }else{
+      throw new Error('el usuario no tiene rol de usuario')
+    }
+  } catch (error) {
+    res.status(403).json({
+      success:STATUS.FAIL,
+      message:error.message
+    })
+  }
+}
+
+
+export const isAdmin =(req,res,next) =>{
+  try {
+    if(req.session.user.role ==='admin'){
+      req.session.touch()
+      next()
+    }else{
+      throw new Error('no es una ADMIN')
+    }
+  } catch (error) {
+    res.status(403).json({
+      success:STATUS.FAIL,
+      message:error.message
+    })
+  }
+}
+
+
+// export const checkSession = (req, res, next)=>{
+//   try {
+//     if(req.session.logged){
+//       req.session.touch()
+//       next()
+//     }else{
+//       throw new Error('usuario no logueado')
+//     }
+//   } catch (error) {
+//     res.status(403).json({
+//       success: STATUS.FAIL,
+//       message: error.message
+//     })
+//   }
+// }

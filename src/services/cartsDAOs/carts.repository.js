@@ -16,7 +16,7 @@ export class CartRepository{
 
   async getCartById(cartId){
     try {
-      const cart = await this.dao.getCartById(cartId).lean()
+      const cart = await this.dao.getCartById(cartId)
       const cartDTO = new CartDTO(cart)
       return cartDTO
     } catch (error) {

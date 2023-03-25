@@ -16,6 +16,7 @@ class TicketMongo{
 
   async createTicket(data){
     try {
+      delete data.status
       const createdTicket = await this.ticket.create(data)
       return createdTicket
     } catch (error) {

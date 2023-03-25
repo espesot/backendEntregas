@@ -4,8 +4,10 @@ import cookie from 'cookie-parser'
 import session from 'express-session'
 import mongoStore from 'connect-mongo'
 import passport from './utils/passport.utils.js'
-import dotenv from 'dotenv'
-dotenv.config()
+import configs from './configs/app.configs.js'
+
+// import dotenv from 'dotenv'
+// dotenv.config()
 // import dbConnect from './configs/db.config.js'
 
 const app = express()
@@ -15,13 +17,13 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookie())
 app.use(session({
   store: new mongoStore({
-    mongoUrl: process.env.URL_DB,
+    mongoUrl: configs.mongoUri,
     options:{
       userNewUrlparser: true,
       useUnifiedTopology: true,
     }
   }),
-  secret: process.env.COOKIE_SECRET,
+  secret: configs.cookieSecret,
   resave:false,
   saveUninitialized:false,
   cookie:{maxAge:100000}

@@ -1,17 +1,17 @@
 import { Router } from 'express'
 import * as products from '../controllers/products.controllers.js'
+import{isLogged, isUser} from '../middlewares/auth.middleware.js'
 
 const router = Router()
 
 router.get('/', products.getProducts)
 
-
 router.get('/:pid', products.getProductbyId)
 
-router.post('/',products.postProduct)
+router.post('/',[isLogged,isUser],products.postProduct)
 
-router.put('/:pid',products.updateProduct)
+router.put('/:pid',[isLogged,isUser],products.updateProduct)
 
-router.delete('/:pid', products.deleteProductById)
+router.delete('/:pid',[isLogged,isUser] ,products.deleteProductById)
 
 export default router
