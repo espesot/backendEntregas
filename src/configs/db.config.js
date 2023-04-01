@@ -1,15 +1,16 @@
 import mongoose from 'mongoose'
 import configs from './app.configs.js'
+import logger from '../utils/logger.utils.js'
 
 
 const dbConnect = async () =>{
   try {
-    console.log('[Conecting to DB ⚡️')
+    logger.info('[Conecting to DB ⚡️')
     mongoose.set('strictQuery', false)
     await mongoose.connect(configs.mongoUri || '')    
-    console.log('DB Connected')
+    logger.info('DB Connected')
   } catch (error) {
-    console.log(error)
+    logger.error(error)
   }
 }
 export default dbConnect

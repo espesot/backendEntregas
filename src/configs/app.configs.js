@@ -12,7 +12,8 @@ const configs = {
     clientSecret: process.env.CLIENT_SECRET || null,
     appId: process.env.APP_ID || null
   },
-  persistencia : process.env.PERSISTENCIA || PERSISTENCIA.MONGO
+  persistencia : process.env.PERSISTENCIA || PERSISTENCIA.MONGO,
+  nodeEnv: process.env.NODE_ENV || 'development'
 }
 
 export default configs

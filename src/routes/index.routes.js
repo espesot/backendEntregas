@@ -9,6 +9,7 @@ import authRoutes from './auth.routes.js'
 import passportLocalRoutes from './passportLocal.routes.js'
 import githubRoutes from './github.routes.js'
 import sessionRoutes from './sessions.routes.js'
+import loggerRoutes from './logger.routes.js'
 
 const router = Router()
 
@@ -27,4 +28,6 @@ router.use('/api/passportLocal', passportLocalRoutes)
 router.use('/api/github', githubRoutes)
 
 router.use('/api/sessions', sessionRoutes)
+
+router.use('/api/loggerTest', loggerRoutes)
 export default router
