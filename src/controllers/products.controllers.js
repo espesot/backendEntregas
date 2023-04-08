@@ -49,6 +49,8 @@ export const getProductbyId = async (req, res) => {
 export const postProduct = async (req, res) => {
   try {
     const product = req.body
+    product.owner = req.session.user._id
+
     const savedProduct = await factory.products.createProduct(product)
     const productsList = await factory.products.getProducts()
     req.io.emit('products', productsList)
@@ -94,9 +96,10 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProductById = async (req, res) => {
   try {
+    const user = req.session.user
     const { pid } = req.params
     //await productManager.deleteProduct(Number(req.params.pid))
-    await factory.products.deleteProduct(pid)
+    await factory.products.deleteProduct(pid, user)
 
     //const productsList = await productManagerFs.getPrducts()
     const productsList = await factory.products.getProducts()

@@ -61,4 +61,17 @@ export default class UsersCRUD{
       throw new Error(error.message) 
     }
   }
+
+  async getUserById(id){
+    try {
+      const user = await this.user.findById(id).lean()
+      if(!user){
+        throw new Error('Error en busqueda de usuario')
+      }
+      return user
+    } catch (error) {
+      throw new Error(error.message) 
+    }
+  }
+
 }

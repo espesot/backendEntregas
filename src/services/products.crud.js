@@ -10,16 +10,25 @@ export default class ProductCRUD {
       if (!_.isEmpty(params)) {
         const { limit, page, sort, query } = params
         if (query) {
-          result = await this.product.paginate({ ...JSON.parse(query), deleted: { $eq: false } }, { limit: limit, page: page, sort: [['price', sort]], lean: true })
+          result = await this.product.paginate(
+            { ...JSON.parse(query), deleted: { $eq: false } },
+            { limit: limit, page: page, sort: [['price', sort]], lean: true }
+          )
         } else {
-          result = await this.product.paginate({ deleted: { $eq: false } }, { limit: limit, page: page, sort: [['price', sort]], lean: true })
+          result = await this.product.paginate(
+            { deleted: { $eq: false } },
+            { limit: limit, page: page, sort: [['price', sort]], lean: true }
+          )
         }
       } else {
-        result = await this.product.paginate({ deleted: { $eq: false } }, { pagination: false, lean: true })
+        result = await this.product.paginate(
+          { deleted: { $eq: false } },
+          { pagination: false, lean: true }
+        )
       }
       return {
         products: result.docs,
-        metadata: _.omit(result, ['docs'])
+        metadata: _.omit(result, ['docs']),
       }
     } catch (error) {
       throw new Error(error.message)
@@ -38,12 +47,19 @@ export default class ProductCRUD {
       throw new Error(error.message)
     }
   }
-  async createProduct(product){
+
+  async createProduct(product) {
     try {
-      const foundedProduct = await this.product.findOne({code:product.code})
-      if(foundedProduct){
-        throw new Error('el codigo ya existe')
-      }else{
+      const foundedProduct = await this.product.findOne({ code: product.code })
+      if (foundedProduct.deleted) {
+        foundedProduct.deleted = false
+        const createProduct = await this.product.findByIdAndUpdate(
+          foundedProduct._id,
+          foundedProduct,
+          { new: true }
+        )
+        return createProduct
+      } else {
         const createdProduct = await this.product.create(product)
         return createdProduct
       }
@@ -52,19 +68,39 @@ export default class ProductCRUD {
     }
   }
 
-  async updateProduct(productId,data){
+  async updateProduct(productId, data) {
     try {
-      const updatedProduct = await this.product.findByIdAndUpdate(productId,data,{new:true})
+      const updatedProduct = await this.product.findByIdAndUpdate(
+        productId,
+        data,
+        { new: true }
+      )
       return updatedProduct
     } catch (error) {
       throw new Error(error.message)
     }
   }
 
-
-  async deleteProduct(producId){
+  async deleteProduct(producId, user) {
     try {
-      await this.product.delete({_id:producId})
+      const foundedProduct = await this.product.findById(producId).lean()
+      if (foundedProduct) {
+        if (user.role === 'admin') {
+          await this.product.delete({ _id: producId })
+          return
+        }
+        if (foundedProduct.owner === undefined) {
+          throw new Error('solo el user Premium puede eliminar produtos')
+        }
+        if (user.role === 'premium' && foundedProduct.owner._id == user._id) {
+          await this.product.delete({ _id: producId })
+          return
+        } else {
+          throw new Error('solo el user Premium puede eliminar produtos')
+        }
+      } else {
+        throw new Error('solo el user Premium puede eliminar produtos')
+      }
     } catch (error) {
       throw new Error(error.message)
     }

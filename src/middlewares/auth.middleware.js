@@ -66,6 +66,38 @@ export const isAdmin =(req,res,next) =>{
   }
 }
 
+export const isUserOrPremium = (req,res,next)=>{
+  try {
+    if(req.session.user.role === 'user' || req.session.user.role === 'premium'){
+      req.session.touch()
+      next()
+    }else{
+      throw new Error('Debe ser premium o usuario para agregar productos')
+    }
+  } catch (error) {
+    res.status(403).json({
+      success:STATUS.FAIL,
+      message:error.message
+    })
+  }
+}
+
+export const isAdminOrPremium = (req,res,next)=>{
+  try {
+    if(req.session.user.role === 'admin' || req.session.user.role === 'premium'){
+      req.session.touch()
+      next()
+    }else{
+      throw new Error('Debe ser premium o admin para agregar productos')
+    }
+  } catch (error) {
+    res.status(403).json({
+      success:STATUS.FAIL,
+      message:error.message
+    })
+  }
+}
+
 
 // export const checkSession = (req, res, next)=>{
 //   try {

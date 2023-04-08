@@ -10,4 +10,6 @@ router.post('/ui', usersControllers.createUser)
 
 router.put('/updateUser/:email', usersControllers.updateUser)
 router.put('/updatePassword/:email', usersControllers.updatePassword)
+
+router.post('/premium/:uid', usersControllers.updateUserRole)
 export default router

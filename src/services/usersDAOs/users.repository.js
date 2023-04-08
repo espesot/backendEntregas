@@ -34,4 +34,14 @@ export class UserRepository{
       throw new Error(error.message)
     }
   }
+
+  async getUserById(id){
+    try {
+      const user = await this.dao.getUser(id)
+      const userDTO = new UserDTO(user)
+      return userDTO
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
 }

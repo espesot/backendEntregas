@@ -13,7 +13,10 @@ const configs = {
     appId: process.env.APP_ID || null
   },
   persistencia : process.env.PERSISTENCIA || PERSISTENCIA.MONGO,
-  nodeEnv: process.env.NODE_ENV || 'development'
+  nodeEnv: process.env.NODE_ENV || 'development',
+  gmailAppPass: process.env.PASS_GMAIL || null,
+  gmailUser: process.env.USER_GMAIL || null,
+  jwtSecret: process.env.JWT_SECRET || null
 }
 
 export default configs

@@ -74,3 +74,23 @@ export const updatePassword = async(req,res)=>{
     })
   }
 }
+
+export const updateUserRole = async(req,res)=>{
+  try {
+    const {uid} = req.params
+    let user = await factory.users.getUserById(uid)
+    user.role = 'premium'
+    
+    const updatedUser = await factory.users.updateUser(user.email,user,false)
+    delete updateUser.password
+    res.status(200).json({
+      success:true,
+      updatedUser:updatedUser
+    })
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:error.message
+    })
+  }
+}

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import MongooseDelete from 'mongoose-delete'
 import mongoosPaginate from 'mongoose-paginate-v2'
 
@@ -37,6 +37,10 @@ const productSchema = new mongoose.Schema({
     type: [String],
     required:true
   },
+  owner:{
+    type:Schema.Types.ObjectId,
+    ref:'Users'
+  }
 }, {timestamps:true})
 
 productSchema.plugin(MongooseDelete,{deletedAt:true})

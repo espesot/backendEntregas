@@ -24,6 +24,17 @@ export const addProductToCart = async (req, res) => {
     let { cid, pid } = req.params
     let { quantity } = req.body
 
+    const user = req.session.user
+    if(user.role === 'premium'){
+      const foundedProduct = await factory.prodcuts.getProductById(pid)
+      if(foundedProduct.owner === 'admin'){
+        throw new Error('el usuario PREMIUM solo puede eliminar los productos')
+      }
+      if (foundedProduct.owner._id.toString() !== user.id){
+        throw new Error('el usuario PREMIUM solo puede eliminar los productos')
+      }
+    }
+
     if (quantity) {
       await factory.carts.addProductToCart(cid, pid, quantity)
     } else {

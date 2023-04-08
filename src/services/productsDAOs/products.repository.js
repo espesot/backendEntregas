@@ -44,9 +44,9 @@ export class ProductRepository{
     }
   }
   
-  async deleteProduct(productId){
+  async deleteProduct(productId, user){
     try {
-      await this.dao.deleteProduct(productId)
+      await this.dao.deleteProduct(productId, user)
     } catch (error) {
       throw new Error(error.message)
     }
