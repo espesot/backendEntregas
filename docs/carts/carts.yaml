@@ -1,0 +1,133 @@
+paths:
+  /api/carts:
+    post: 
+      summary: crea las Carts 
+      tags:
+        - Carts
+      responses:
+        '201':
+          description: 'respuesta exitosa'
+          content:  
+            application/json:
+              schema: 
+                type: array 
+                items:
+                  $ref: '#/components/schema/Cart'
+        '500':
+          description: 'errror en respuesta'
+          content:  
+            application/json:
+              schema: 
+                type: array 
+                items:
+                  $ref: '#/components/schema/FailResponse'
+  /api/carts/{cid}:
+    parameters: 
+    - name: cid 
+      in: path 
+      required: true 
+      description: Id de Carts 
+      schema: 
+        $type: string
+    put:
+      summary: Agrega prodcuto al Cart 
+      tags:
+        - Carts
+      responses:
+        '201':
+          description: 'respuesta exitosa'
+          content:  
+            application/json:
+              schema: 
+                $ref: '#/components/schema/AddProdcutSuccessResponse'
+        '401':
+          description: 'respuesta erronea'
+          content:  
+            application/json:
+              schema: 
+                $ref: '#/components/schema/FailResponse'
+
+        '500':
+          description: 'errror en respuesta'
+          content:  
+            application/json:
+              schema: 
+                $ref: '#/components/schema/FailResponse'
+
+components:
+  schema:
+    AddProdcutSuccessResponse:
+      type: object 
+      properties:
+        status:
+          type: string
+        message:
+          type: string 
+          description: error message
+    FailResponse:  
+      type: object 
+      properties:
+        status:
+          type: string 
+          description: campo que indica la respusta  
+        message:
+          type: string 
+          description: error message
+    Product: 
+      type: object
+      properties:
+        _id:
+          type: string 
+          description: Id del producto en BD                         
+        title:
+          type: string 
+          description: Nombre del prodcuto                         
+        description:
+          type: string 
+          description: description detallada del producto                         
+        code:
+          type: string 
+          description: codigo del prodcuto                         
+        price:
+          type: integer 
+          description: precio del producto                         
+        stock:
+          type: integer 
+          description: cantidad disponible del prodcuto                         
+        category:
+          type: string 
+          description: categoria del producto                         
+        thumbnails:
+          type: array 
+          description: array de imagenes del prodcuto
+          items:  
+            type: string 
+        deleted: 
+          type: boolean 
+          description: indicador de producto eliminado 
+        createdAt:
+          type: string 
+          description: fecha de creacion                        
+        deletedAt:
+          type: string 
+          description: fecha de eliminacion
+    CartItem:
+      type: object 
+      properties:
+        product: 
+          type: object 
+          $ref: '#/components/schema/Product'
+        quantity:
+          type: integer 
+          description: cantidad de producto dentro del Cart 
+    Cart: 
+      type: object
+      properties: 
+        _id:  
+          type: string
+          description: id en DB de Cart 
+        items: 
+          type: array 
+          items:
+            $ref: '#/components/schema/CartItem'                              
+    

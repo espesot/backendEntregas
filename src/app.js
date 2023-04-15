@@ -8,6 +8,9 @@ import configs from './configs/app.configs.js'
 import { Server } from 'socket.io'
 import { webSocketInit } from './utils/websocket.js'
 import routes from './routes/index.routes.js'
+import swaggerUiExpress from 'swagger-ui-express'
+import specs from './utils/swagger.util.js'
+
 
 // import dotenv from 'dotenv'
 // dotenv.config()
@@ -51,6 +54,7 @@ app.use(passport.session())
 
 app.use(routes)
 
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 const server = app.listen(configs.port, () => {
   console.log(`🚀 Server started on port http://localhost:${configs.port}`)

@@ -1,0 +1,165 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obitiene todos los prodcutos
+      tags:
+        - Prodcutos
+      responses:
+        '200':
+          description: 'Respuesta exitosa'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          description: 'Fallo la respuesta'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/scehemas/FailResponse'
+
+  /api/products/{pid}:
+    parameters:
+    - name: pid
+      in: path 
+      required: true
+      description: id del producto 
+      schema: 
+        $type: String
+    get:
+      summary: devuelve el producto del ID     
+      tags:
+        - Products 
+      responses:
+        '200':
+          description: 'respuesta exitosa'
+          content: 
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Product'
+        '500':
+          description: 'Fallo la respuesta'
+          content:
+          application/json:
+            schema:
+              $ref:'#/components/schemas/FailResponse'
+    put:
+      summary: modifica el prodcuto con el ID enviado
+      requestBody:
+        description: prodcutos modificados
+        required: true 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schema/Product'
+      tags:
+        - Products
+      responses:
+        '201':
+          description: 'respuesta exitosa'
+          content:  
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdcutCreatedResponse'
+        '500':
+          description: 'falla en respuesta'
+          content:  
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailREsponse'
+    delete:
+      summary: elimina el prodcuto con el Id indicado
+      tags:
+        - Products
+      responses:
+        '201':
+          description: 'respuesta exitosa'
+          content:  
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessfulyDeletedProduct'
+        '500':
+          description: 'falla en respuesta'
+          content:  
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailREsponse'
+    
+
+
+
+
+
+components:
+  schemas:
+    SuccessfulyDeletedProduct:
+      type: object
+      properties:
+        status:
+          type: string 
+          description: campo de respuesta de peticion
+        message:
+          type: string 
+          description: mensaje que indica que producto fue eliminado
+    ProductCreatedResponse:
+      type: object
+      properties:
+        status:
+          type: string 
+          description: campo de respuesta de peticion
+        message:
+          type: string 
+          description: mensaje que indica que producto fue creado 
+        product: 
+          type: object 
+          description: producto que fue creado
+    FailResponse:
+      type: object
+      properties:
+        status:
+          type: string 
+          description: campo que indica la falla que aparecio
+        message:
+          type: string 
+          description: mensaje de error
+
+    Product: 
+      type: object
+      properties:
+        _id:
+          type: string 
+          description: Id del producto en BD                         
+        title:
+          type: string 
+          description: Nombre del prodcuto                         
+        description:
+          type: string 
+          description: description detallada del producto                         
+        code:
+          type: string 
+          description: codigo del prodcuto                         
+        price:
+          type: integer 
+          description: precio del producto                         
+        stock:
+          type: integer 
+          description: cantidad disponible del prodcuto                         
+        category:
+          type: string 
+          description: categoria del producto                         
+        thumbnails:
+          type: array 
+          description: array de imagenes del prodcuto
+          items:  
+            type: string 
+        deleted: 
+          type: boolean 
+          description: indicador de producto eliminado 
+        createdAt:
+          type: string 
+          description: fecha de creacion                        
+        deletedAt:
+          type: string 
+          description: fecha de eliminacion                        
