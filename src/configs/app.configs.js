@@ -5,7 +5,7 @@ import {PERSISTENCIA} from '../constants/constants.js'
 
 const configs = {
   port :process.env.PORT || 8080,
-  mongoUri: process.env.URL_DB || null,
+  mongoUri: process.env.NODE_ENV === 'test' ? process.env.URL_DB_TEST : process.env.URL_DB,
   cookieSecret: process.env.COOKIE_SECRET || null,
   gitHub:{
     clientId: process.env.CLIENT_ID || null,

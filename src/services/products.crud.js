@@ -51,7 +51,7 @@ export default class ProductCRUD {
   async createProduct(product) {
     try {
       const foundedProduct = await this.product.findOne({ code: product.code })
-      if (foundedProduct.deleted) {
+      if (foundedProduct?.deleted) {
         foundedProduct.deleted = false
         const createProduct = await this.product.findByIdAndUpdate(
           foundedProduct._id,
