@@ -8,6 +8,9 @@ export default class UserDTO{
     this.password = user.password
     this.cartId = user.cartId
     this.role = user.role
+    this.documents = user.documents
+    this.lastConnection = user.lastConnection
+    this.status = user.status
     this.deleted = user.deleted
     this.createdAt = user.createdAt
     this.updatedAt = user.updatedAt

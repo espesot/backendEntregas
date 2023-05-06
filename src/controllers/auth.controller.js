@@ -1,6 +1,6 @@
 import * as authServices from '../services/auth.services.js'
-import * as usersServices from '../services/users.services.js'
 import { STATUS } from '../constants/constants.js'
+import factory from '../services/factory.js'
 
 export const login = async (req, res) => {
   try {
@@ -9,7 +9,7 @@ export const login = async (req, res) => {
 
     if (logged) {
       req.session.logged = true
-      req.session.user = await usersServices.getUser(email)
+      req.session.user = await factory.user.getUser(email)
       res.status(200).json({
         success: STATUS.SUCCESS,
         message: 'ususario Loggeado OK'

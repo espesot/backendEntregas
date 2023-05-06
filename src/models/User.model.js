@@ -2,6 +2,16 @@ import { model, Schema } from 'mongoose'
 import mongooseDelete from 'mongoose-delete'
 import mongoosePaginate from 'mongoose-paginate-v2'
 
+const documentSchema = new Schema({
+  name:{
+    type: String
+  },
+  reference:{
+    type: String
+  }
+})
+
+
 const userSchema = new Schema({
   firstName:{
     type: String,
@@ -35,6 +45,19 @@ const userSchema = new Schema({
     type: String,
     require:true,
     default:'user'
+  },
+  documents:[
+    {
+      type: documentSchema,
+      default:[]
+    }
+  ],
+  lastConnection:{
+    type: Date
+  },
+  status:{
+    type: String,
+    default: ''
   }
 },
 {
