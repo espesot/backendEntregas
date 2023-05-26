@@ -3,13 +3,13 @@ import {engine} from 'express-handlebars'
 import cookie from 'cookie-parser'
 import session from 'express-session'
 import mongoStore from 'connect-mongo'
-import passport from './utils/passport.utils.js'
-import configs from './configs/app.configs.js'
+import passport from './utils/passportUtilis.js'
+import configs from './configs/app.js'
 import { Server } from 'socket.io'
 import { webSocketInit } from './utils/websocket.js'
-import routes from './routes/index.routes.js'
+import routes from './routes/indexRutas.js'
 import swaggerUiExpress from 'swagger-ui-express'
-import specs from './utils/swagger.util.js'
+import specs from './utils/swagger.js'
 
 const app = express()
 app.use(express.json())

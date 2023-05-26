@@ -1,6 +1,6 @@
-import config from './app.configs.js'
+import config from './app.js'
 import mongoose from 'mongoose'
-import logger from '../utils/logger.utils.js'
+import logger from '../utils/loggerUtilis.js'
 
 mongoose.set('strictQuery', false)
 mongoose.connect(config.mongoUri, (err)=>{

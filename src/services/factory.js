@@ -1,10 +1,10 @@
 import { PERSISTENCIA } from '../constants/constants.js'
-import configs from '../configs/app.configs.js'
+import configs from '../configs/app.js'
 import { UserRepository } from './usersDAOs/users.repository.js'
-import { ProductRepository } from './productsDAOs/products.repository.js'
-import { CartRepository } from './cartsDAOs/carts.repository.js'
-import {TicketRepository} from './ticketsDAOs/tickets.repository.js'
-import logger from '../utils/logger.utils.js'
+import { ProductRepository } from './productsDAOs/prodcutosRepositorios.js'
+import { CartRepository } from './cartsDAOs/carrosRepositorio.js'
+import {TicketRepository} from './ticketsDAOs/ticketsRepositorios.js'
+import logger from '../utils/loggerUtilis.js'
 
 let factory = {}
 
@@ -12,10 +12,10 @@ switch (configs.persistencia) {
 case PERSISTENCIA.MONGO:{
   logger.info('Mongo persistencia')
   await import('../configs/mongo.js')
-  const { default: userMongo } = await import('./usersDAOs/users.mongo.dao.js')
-  const { default: productsMongo } = await import('./productsDAOs/products.mongo.dao.js')
-  const { default: cartsMongo } = await import('./cartsDAOs/carts.mongo.dao.js')
-  const { default: ticketMongo } = await import('./ticketsDAOs/tickets.mongo.dao.js')
+  const { default: userMongo } = await import('./usersDAOs/usuariosMongoDAO.js')
+  const { default: productsMongo } = await import('./productsDAOs/productosMongoDAO.js')
+  const { default: cartsMongo } = await import('./cartsDAOs/carrosMongo.js')
+  const { default: ticketMongo } = await import('./ticketsDAOs/ticketsMongoDAO.js')
   factory = {
     users: new UserRepository(userMongo),
     products: new ProductRepository(productsMongo),

@@ -1,5 +1,5 @@
-import UserDTO from './users.dto.js'
-import FilterUserDTO from './filterUser.dto.js'
+import UserDTO from './usuariosDTO.js'
+import FilterUserDTO from './filtradoUsuarios.js'
 
 export class UserRepository{
   constructor(dao){

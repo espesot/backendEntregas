@@ -1,4 +1,4 @@
-import Message from '../models/Message.model.js'
+import Message from '../models/mensajes.js'
 
 export const webSocketInit = (io) => {
   io.on('connection', (socket) => {
