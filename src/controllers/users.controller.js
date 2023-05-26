@@ -1,6 +1,8 @@
 import { STATUS } from '../constants/constants.js'
 import factory from '../services/factory.js'
 import { checkRequiredFiles } from '../utils/checkFiles.utils.js'
+import moment from 'moment'
+import * as emailUtils from '../utils/nodemailer.utils.js'
 
 
 export const createUser = async(req,res)=>{
@@ -97,6 +99,29 @@ export const updateUserRole = async(req,res)=>{
   }
 }
 
+export const deleteInactiveUsers =async(req,res)=>{
+  try {
+    const users = await factory.users.getUsers(false)
+    for await(const user of users){
+      const days = moment().diff(moment(user.lastConnection), 'days')
+      if(days>=days){
+        await factory.users.deleteUser(user.id)
+        emailUtils.sendDeleteAccountEmail(user.email)
+      }
+    }
+    const result = await factory.users.getUsers(true)
+    res.status(200).json({
+      status:STATUS.SUCCESS,
+      users: result
+    })
+  } catch (error) {
+    res.status(500).json({
+      status:STATUS.FAIL,
+      message:error.message
+    })   
+  }
+}
+
 export const uploadFiles = async(req,res)=>{
   try {
     const {uid} = req.params
@@ -119,6 +144,37 @@ export const uploadFiles = async(req,res)=>{
     res.status(201).json({
       status:STATUS.SUCCESS,
       message:'Archivo Cargado OK!!'
+    })
+  } catch (error) {
+    res.status(500).json({
+      status:STATUS.FAIL,
+      message:error.message
+    })   
+  }
+}
+
+export const deleteUser = async(req,res)=>{
+  try {
+    const {email} = req.params
+    const user  = await factory.users.getUsers(email)
+    await factory.users.deleteUsers(user.id)
+    res.status(200).json({
+      status:STATUS.SUCCESS,
+      users: 'ususario Eliminado'
+    })
+  } catch (error) {
+    res.status(500).json({
+      status:STATUS.FAIL,
+      message:error.message
+    })   
+  }
+}
+export const getUsers = async(req,res)=>{
+  try {
+    const users = await factory.users.getUsers(true)
+    res.status(200).json({
+      status:STATUS.SUCCESS,
+      users: users
     })
   } catch (error) {
     res.status(500).json({

@@ -6,7 +6,7 @@ const router = Router()
 
 router.get('/', products.getProducts)
 
-router.get('/mockingproducts', products.mockProduct)
+router.get('/mockingproducts', products.mockProducts)
 
 router.get('/:pid', products.getProductbyId)
 

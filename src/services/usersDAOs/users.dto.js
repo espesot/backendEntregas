@@ -1,7 +1,7 @@
 export default class UserDTO{
   constructor(user){
-    this.id = user.id || user.id
-    this.fistName = user.fistName
+    this.id = user._id || user.id
+    this.firstName = user.firstName
     this.lastName = user.lastName
     this.email = user.email
     this.age = user.age

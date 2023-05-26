@@ -5,7 +5,7 @@ import factory from '../services/factory.js'
 export const postCart = async (req, res) => {
   try {
     //await cartManagerFs.createNewCart()
-    const createdCard = await factory.carts.createCard()
+    const createdCard = await factory.carts.createCart()
     res.status(201).json({
       success: STATUS.SUCCESS,
       createCard: createdCard,
@@ -26,7 +26,7 @@ export const addProductToCart = async (req, res) => {
 
     const user = req.session.user
     if(user.role === 'premium'){
-      const foundedProduct = await factory.prodcuts.getProductById(pid)
+      const foundedProduct = await factory.products.getProductById(pid)
       if(foundedProduct.owner === 'admin'){
         throw new Error('el usuario PREMIUM solo puede eliminar los productos')
       }
@@ -134,8 +134,10 @@ export const purchase = async (req, res) => {
         product.stock -= item.quantity
         purchase.amount += product.price * item.quantity
         purchase.status = true
-        await factory.prodcuts.updateProduct(product.id, product)
-        factory.carts.deleteProductToCart(cid, item.product)
+        await factory.products.updateProduct(product.id, product)
+        for(let i =0; i<item.quantity;i++){
+          factory.carts.deleteProductToCart(cid, item.product)
+        }
       }
     }
     const ticket = await factory.tickets.createTicket(purchase)

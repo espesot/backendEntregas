@@ -31,7 +31,7 @@ case PERSISTENCIA.FILE:{
   const { default: ticketFile } = await import('./ticketsDAOs/tickets.file.dao.js')
   factory = {
     users: new UserRepository(userFile),
-    prodcuts: new ProductRepository(productsFile),
+    products: new ProductRepository(productsFile),
     carts: new CartRepository(cartsFile),
     tickets: new TicketRepository(ticketFile)
   }

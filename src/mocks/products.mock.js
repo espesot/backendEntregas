@@ -12,6 +12,7 @@ const createProdcut = () => {
     code: faker.random.alpha({count:10, casing:'upper'}),
     price: faker.commerce.price(),
     status: faker.datatype.number({max:100}),
+    stock: faker.datatype.number({max:50}),
     category: faker.commerce.department(),
     thumbnails: Array.from({length:faker.random.numeric(1)},createImg),
     deleted: faker.datatype.boolean(),

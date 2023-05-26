@@ -9,7 +9,7 @@ export const login = async (req, res) => {
 
     if (logged) {
       req.session.logged = true
-      req.session.user = await factory.user.getUser(email)
+      req.session.user = await factory.users.getUser(email)
       res.status(200).json({
         success: STATUS.SUCCESS,
         message: 'ususario Loggeado OK'

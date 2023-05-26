@@ -3,11 +3,10 @@ import passportLocal from 'passport-local'
 import passportGitHub from 'passport-github2'
 
 import { User } from '../models/User.model.js'
-import * as userServices from '../services/users.services.js'
 import * as authServices from '../services/auth.services.js'
-
-import dotenv from 'dotenv'
-dotenv.config()
+import * as userService from '../services/users.services.js'
+import configs from '../configs/app.configs.js'
+import factory from '../services/factory.js'
 
 passport.serializeUser(function (user, done) {
   console.log('Serializando')
@@ -27,11 +26,11 @@ passport.use('singup', new passportLocal.Strategy({passReqToCallback:true, usern
     if(userExist){
       return done('usuario existente', false)
     }else{
-      const user = await userServices.createUser(req.body)
+      const user = await userService.createUser(req.body)
       return done(null, user)
     }
   } catch (error) {
-    throw new Error(error.message)
+    return done(error.message,false)
   }
 }))
 
@@ -45,24 +44,23 @@ passport.use('login', new passport.Strategy({passReqToCallback:true, usernameFie
       return done ('erroren logueo', false)
     }
   } catch (error) {
-    throw new Error(error.message)
+    return done(error.message, false)
   }
 }))
 
 passport.use('github', new passportGitHub.Strategy({
-  clientID: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
+  clientID: configs.gitHub.clientId,
+  clientSecret: configs.gitHub.clientSecret,
   callbackURL: 'http://localhost:3000/api/github/callback'
 }, async(accessToken, refreshToken, profile, done)=>{
   try {
-    console.log(profile)
     const newUser ={
       first_name: profile.displayName,
       last_name: profile.displayName,
       age:20,
       email:profile._json.email
     }
-    const user = await User.create(newUser)
+    const user = await factory.users.create(newUser)
     done(null,user)
   } catch (error) {
     throw new Error(error.message)
@@ -70,8 +68,8 @@ passport.use('github', new passportGitHub.Strategy({
 }))
 
 passport.use('githubLogin', new passportGitHub.Strategy({
-  clientID: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
+  clientID: configs.gitHub.clientId,
+  clientSecret: configs.gitHub.clientSecret,
   callbackURL:'http://localhost:3000/api/github/callback'
 }, async(accessToken, refreshToken, profile, done)=>{
   try {

@@ -11,11 +11,6 @@ import routes from './routes/index.routes.js'
 import swaggerUiExpress from 'swagger-ui-express'
 import specs from './utils/swagger.util.js'
 
-
-// import dotenv from 'dotenv'
-// dotenv.config()
-// import dbConnect from './configs/db.config.js'
-
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -23,8 +18,6 @@ app.use((req,res,next)=>{
   req.io = io
   next()
 })
-
-
 
 //Nuevo
 app.use(cookie())
@@ -64,7 +57,5 @@ server.on('error', (err) => console.log(err))
 
 const io = new Server(server)
 webSocketInit(io)
-
-// webSocketInit(io)
 
 export default app

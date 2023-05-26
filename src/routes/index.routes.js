@@ -20,9 +20,9 @@ router.use('/api/products', productRouter)
 
 router.use('/api/carts',cartRouter)
 
-router.use('api/auth' ,authRoutes)
+router.use('/api/auth' ,authRoutes)
 
-router.use('api/users', usersRoutes)
+router.use('/api/users', usersRoutes)
 
 router.use('/api/passportLocal', passportLocalRoutes)
 
