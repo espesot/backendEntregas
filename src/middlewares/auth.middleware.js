@@ -20,7 +20,7 @@ export const authMiddleware = (req, res, next) => {
 export const isLogged = (req, res, next)=>{
   try {
     if(req.session.logged){
-      res.session.touch()
+      req.session.touch()
       next()
     }else{
       throw new Error('Usuario no logueado')

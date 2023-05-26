@@ -10,14 +10,16 @@ class UserMongo{
   }
   async getUsers(){
     try {
-      const users = await this.user.find({deleted:{$eq:false}})
-      if(users.lenght === 0){
-        throw new Error('usuario vacio')
+      const users = await this.user.find( { deleted: {$eq:false } } )
+      if(users.length === 0){
+        throw new Error('No hay usuarios registrados')
       }
+      return users
     } catch (error) {
       throw new Error(error.message)
     }
   }
+
   async getUser(email){
     try {
       const user = await this.user.findOne({email:email}).lean()
@@ -29,6 +31,7 @@ class UserMongo{
       throw new Error(error.message)
     }
   }
+
   async getUserById(id){
     try {
       const user = await this.user.findById(id).lean()

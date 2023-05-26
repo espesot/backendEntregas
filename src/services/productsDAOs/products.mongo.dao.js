@@ -46,13 +46,13 @@ class ProductMongo {
   async createProduct(product) {
     try {
       const foundedProduct = await this.product.findOne({ code: product.code })
-      if (foundedProduct) {
+      if (foundedProduct?.deleted) {
         foundedProduct.deleted = false
         const createdProduct = await this.product.findByIdAndUpdate(foundedProduct._id,foundedProduct,{new:true})
         return createdProduct
       } else {
-        const product = await this.product.create(this.product)
-        return product
+        const createdProduct = await this.product.create(product)
+        return createdProduct
       }
 
     } catch (error) {
